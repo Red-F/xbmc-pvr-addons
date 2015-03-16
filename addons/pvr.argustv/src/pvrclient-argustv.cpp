@@ -1123,6 +1123,10 @@ cChannel* cPVRClientArgusTV::FetchChannel(int channelid, bool LogError)
 
 cChannel* cPVRClientArgusTV::FetchChannel(std::vector<cChannel*> m_Channels, int channelid, bool LogError)
 {
+  // TODO: remove this extra logging once suspend problem has been resolved
+  LogError = true;
+  // TODO: remove this extra logging once suspend problem has been resolved
+ 
   // Search for this channel in our local channel list to find the original ChannelID back:
   vector<cChannel*>::iterator it;
 
@@ -1135,6 +1139,17 @@ cChannel* cPVRClientArgusTV::FetchChannel(std::vector<cChannel*> m_Channels, int
   }
 
   if (LogError) XBMC->Log(LOG_ERROR, "XBMC channel with id %d not found in the channel cache!.", channelid);
+
+  // TODO: remove this extra logging once suspend problem has been resolved
+  if (LogError) {
+    XBMC->Log(LOG_ERROR, "  There are %d channels in the channel cache! Dumping cache contents:", m_Channels.size());
+    for (it = m_Channels.begin(); it < m_Channels.end(); it++)
+    {
+      XBMC->Log(LOG_ERROR, "  Channel id: %d, name \"%s\", GUID %s.", (*it)->ID(), (*it)->Name(), (*it)->Guid().c_str());
+    }
+  }
+  // TODO: remove this extra logging once suspend problem has been resolved
+
   return NULL;
 }
 
